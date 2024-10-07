@@ -2,7 +2,7 @@
 #ifndef FORKY_H
 #define FORKY_H
 
-void fork_pattern_1(int num_things, FILE *file);
-void fork_pattern_2(int num_things, FILE *file);
+void fork_pattern_1(int number_of_things);
+void fork_pattern_2(int number_of_things);
 
 #endif

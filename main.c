@@ -1,41 +1,30 @@
 // By Eymard Alarcon //
+#include "forky.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "forky.h"
 
 int main(int argc, char *argv[]) {
     if (argc != 3) {
-        fprintf(stderr, "Usage: %s <number_of_things> <pattern_number>\n", argv[0]);
-        exit(EXIT_FAILURE);
+        fprintf(stderr, "Usage: %s <number_of_things> <pattern>\n", argv[0]);
+        return 1;
     }
 
-    int num_things = atoi(argv[1]);
+    int number_of_things = atoi(argv[1]);
     int pattern = atoi(argv[2]);
 
-    if (num_things < 1 || num_things > 256) {
-        fprintf(stderr, "Number of things must be between 1 and 256.\n");
-        exit(EXIT_FAILURE);
+    if (number_of_things < 1 || number_of_things > 256) {
+        fprintf(stderr, "Error: number_of_things must be between 1 and 256.\n");
+        return 1;
     }
 
-    FILE *file = fopen("results.txt", "w");
-    if (file == NULL) {
-        perror("Unable to open results.txt");
-        exit(EXIT_FAILURE);
+    if (pattern == 1) {
+        fork_pattern_1(number_of_things);
+    } else if (pattern == 2) {
+        fork_pattern_2(number_of_things);
+    } else {
+        fprintf(stderr, "Error: pattern must be 1 or 2.\n");
+        return 1;
     }
 
-    switch (pattern) {
-        case 1:
-            fork_pattern_1(num_things, file);
-            break;
-        case 2:
-            fork_pattern_2(num_things, file);
-            break;
-        default:
-            fprintf(stderr, "Invalid pattern number. Must be 1, 2, or 3.\n");
-            fclose(file);
-            exit(EXIT_FAILURE);
-    }
-
-    fclose(file);
     return 0;
 }
